@@ -122,6 +122,7 @@ export default class App extends React.Component {
             setNewGame={this.setNewGame}
           />
         </div>
+
       </Router>
     );
   }

@@ -7,7 +7,6 @@ import QuestionContainer from './QuestionContainer';
 import GameOver from './GameOver';
 // import NotFound from './NotFound';
 
-
 export default class Main extends React.Component {
   render() {
     return (
@@ -19,18 +18,18 @@ export default class Main extends React.Component {
               />
         }/>
 
-      <Route path="/rules" exactly render={() =>
-        !this.props.selectedSpecies ? (
-          <Redirect to="/" />
-        ) : (
-          <GameRules
-            speciesSingular={this.props.speciesSingular}
-            speciesPlural={this.props.speciesPlural}
-          />
-        )
-      }/>
+        <Route path="/rules" exactly render={() =>
+          !this.props.selectedSpecies ? (
+            <Redirect to="/" />
+          ) : (
+            <GameRules
+              speciesSingular={this.props.speciesSingular}
+              speciesPlural={this.props.speciesPlural}
+            />
+          )
+        }/>
 
-      <Route path="/game" exactly render={() =>
+        <Route path="/game" exactly render={() =>
           <QuestionContainer
             skipsRemaining={this.props.skipsRemaining}
             strikeTotal={this.props.strikeTotal}
@@ -42,18 +41,21 @@ export default class Main extends React.Component {
             getGuess={this.props.getGuess}
             setSkips={this.props.setSkips}
             gameOver={this.props.gameOver}
-            wonGame={this.props.wonGame} />
-      }/>
+            wonGame={this.props.wonGame}
+          />
+        }/>
 
-      <Route path="/game-over" exactly render={() =>
-        <GameOver
-          wonGame={this.props.wonGame}
-          setNewGame={this.props.setNewGame}
-          pointTotal={this.props.pointTotal}
-          selectedSpecies={this.props.selectedSpecies}
-        />
-      }/>
-    </div>
+        <Route path="/game-over" exactly render={() =>
+          <GameOver
+            wonGame={this.props.wonGame}
+            setNewGame={this.props.setNewGame}
+            pointTotal={this.props.pointTotal}
+            selectedSpecies={this.props.selectedSpecies}
+          />
+        }/>
+
+        {/* <Route component={NotFound} /> */}
+      </div>
     );
   }
 }

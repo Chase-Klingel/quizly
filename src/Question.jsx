@@ -29,21 +29,23 @@ export default class Question extends React.Component {
     this.props.setSkips();
   }
 
-  getRandChoice(questionOptions, allChoices, currChoice, foundUnique) {
+  getRandChoice(questionOptions, allChoices, currChoice, foundUnique, answer) {
     if (foundUnique) {
       return currChoice;
     } else {
       const randIndex = Math.floor(Math.random() * allChoices.length);
       currChoice = allChoices[randIndex];
 
-      if (questionOptions[currChoice] !== -1) {
+      if (questionOptions.indexOf(currChoice) === -1 && currChoice !== answer) {
         foundUnique = true;
-        return this.getRandChoice(questionOptions, allChoices, currChoice, foundUnique)
       }
+
+      return this.getRandChoice(questionOptions, allChoices, currChoice, foundUnique, answer);
     }
   }
 
   shuffleOptions(finalizedOptions) {
+    console.log(finalizedOptions, ' finalized options');
     for (var i = finalizedOptions.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = finalizedOptions[i];
@@ -55,10 +57,11 @@ export default class Question extends React.Component {
   }
 
   generateQuestions(questionOptions) {
+    const answer = this.props.questionsRepo[this.props.questionCount - 1].answer;
+
     if (questionOptions.length === 3) {
-      const answer = this.props.questionsRepo[this.props.questionCount - 1].answer;
       questionOptions.push(answer);
-      console.log(answer);
+
       const finalizedOptions = this.shuffleOptions(questionOptions);
 
       return (
@@ -68,9 +71,10 @@ export default class Question extends React.Component {
           <li onClick={this.handleChange}>{finalizedOptions[2]}</li>
           <li onClick={this.handleChange}>{finalizedOptions[3]}</li>
         </ul>
-      )
+      );
     } else {
-      const choice = this.getRandChoice(questionOptions, this.props.choicesRepo, null, false);
+      const choice = this.getRandChoice(questionOptions, this.props.choicesRepo, null, false, answer);
+      
       questionOptions.push(choice);
 
       return this.generateQuestions(questionOptions);
