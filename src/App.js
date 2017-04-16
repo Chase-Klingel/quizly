@@ -23,6 +23,8 @@ export default class App extends React.Component {
       wonGame: false
     }
 
+    this.baseState = this.state
+
     this.setInitialGameState = this.setInitialGameState.bind(this);
     this.setSkips = this.setSkips.bind(this);
     this.setNewGame = this.setNewGame.bind(this);
@@ -59,7 +61,7 @@ export default class App extends React.Component {
   }
 
   setNewGame() {
-    this.setState({ gameOver: false, selectedSpecies: false });
+    this.setState(this.baseState)
   }
 
   getGuess(guess, answer) {

@@ -1,11 +1,4 @@
 import React from 'react';
-// const styles = {
-//   option: {
-//     textAlign: 'center',
-//     background: 'black',
-//     color: 'white'
-//   }
-// }
 
 export default class Strikes extends React.Component {
   render() {

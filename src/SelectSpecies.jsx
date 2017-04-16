@@ -21,10 +21,6 @@ class SelectSpecies extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      redirect: ''
-    }
-
     this.handleSelection = this.handleSelection.bind(this);
   }
 
@@ -65,17 +61,17 @@ class SelectSpecies extends React.Component {
             questionsRepo
           );
         })
-        .then(() => {
-          this.setState({ redirect: '/rules' });
-        })
+        // .then(() => {
+        //   this.setState({ redirect: '/rules' });
+        // })
         .catch((err) => {
           return err;
         })
   }
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect}/>
+    if (this.props.selectedSpecies) {
+      return <Redirect to="/rules" />
     }
 
     return (

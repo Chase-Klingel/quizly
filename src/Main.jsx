@@ -5,7 +5,6 @@ import SelectSpecies from './SelectSpecies';
 import GameRules from './GameRules';
 import QuestionContainer from './QuestionContainer';
 import GameOver from './GameOver';
-import Congrats from './Congrats';
 // import NotFound from './NotFound';
 
 
@@ -13,9 +12,9 @@ export default class Main extends React.Component {
   render() {
     return (
       <div className="row">
-        <Route path="/" render={
+        <Route path="/" exactly render={
         () => <SelectSpecies
-                setNewGame={this.props.setNewGame}
+                selectedSpecies={this.props.selectedSpecies}
                 setInitialGameState={this.props.setInitialGameState}
               />
         }/>
@@ -42,18 +41,17 @@ export default class Main extends React.Component {
             questionsRepo={this.props.questionsRepo}
             getGuess={this.props.getGuess}
             setSkips={this.props.setSkips}
-            gameOver={this.props.gameOver} 
+            gameOver={this.props.gameOver}
             wonGame={this.props.wonGame} />
       }/>
 
       <Route path="/game-over" exactly render={() =>
         <GameOver
+          wonGame={this.props.wonGame}
           setNewGame={this.props.setNewGame}
+          pointTotal={this.props.pointTotal}
+          selectedSpecies={this.props.selectedSpecies}
         />
-      }/>
-
-      <Route path="/congrats" exactly render={() =>
-        <Congrats />
       }/>
     </div>
     );

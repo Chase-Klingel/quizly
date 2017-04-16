@@ -6,23 +6,12 @@ import Strikes from './Strikes';
 import PointTotal from './PointTotal';
 import Question from './Question';
 
-// const styles = {
-//   option: {
-//     textAlign: 'center',
-//     background: 'black',
-//     color: 'white'
-//   }
-// }
-
 export default class QuestionContainer extends React.Component {
   render() {
-    if (this.props.gameOver) {
+    if (this.props.gameOver || this.props.wonGame) {
       return <Redirect to="/game-over" />
-    } else if (this.props.wonGame) {
-      console.log('why');
-      return <Redirect to="/congrats" />
     }
-    
+
     return (
       <div className="container">
         <div className="row">
@@ -51,7 +40,8 @@ export default class QuestionContainer extends React.Component {
             questionCount={this.props.questionCount}
             getGuess={this.props.getGuess}
             setSkips={this.props.setSkips}
-          />
+            gameOver={this.props.gameOver}
+            wonGame={this.props.wonGame} />
         </div>
       </div>
     );

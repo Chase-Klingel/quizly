@@ -1,38 +1,45 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-// const styles = {
-//   option: {
-//     textAlign: 'center',
-//     background: 'black',
-//     color: 'white'
-//   }
-// }
 
 export default class GameOver extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { redirect: '' };
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit() {
-
-    this.setState({ redirect: '/' })
-
-    // this.props.setNewGame();
+    this.props.setNewGame();
   }
 
-  render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect}/>
+  gameMessage() {
+    if (this.props.wonGame) {
+      return (
+        <div>
+          <h1>You made it to the end!</h1>
+          <p>Total Points: { this.props.pointTotal }</p>
+          <button onClick={ this.handleSubmit }>Play Again</button>
+        </div>
+      );
     }
 
     return (
       <div>
         <h1>Game Over!</h1>
-        <button onClick={ this.handleSubmit }>Play Again</button>
+        <p>Total Points: { this.props.pointTotal }</p>
+        <button onClick={ this.handleSubmit}>Play Again</button>
+      </div>
+    );
+  }
+
+  render() {
+    if (!this.props.selectedSpecies) {
+      return <Redirect to="/" />
+    }
+
+    return (
+      <div>
+        { this.gameMessage() }
       </div>
     );
   }

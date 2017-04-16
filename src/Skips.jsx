@@ -1,11 +1,4 @@
 import React from 'react';
-// const styles = {
-//   option: {
-//     textAlign: 'center',
-//     background: 'black',
-//     color: 'white'
-//   }
-// }
 
 export default class Skips extends React.Component {
   render() {
