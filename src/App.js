@@ -19,7 +19,8 @@ export default class App extends React.Component {
       correctAnswer: '',
       choicesRepo: [],
       questionsRepo: [],
-      gameOver: false
+      gameOver: false,
+      wonGame: false
     }
 
     this.setInitialGameState = this.setInitialGameState.bind(this);
@@ -75,6 +76,10 @@ export default class App extends React.Component {
       const correctTotal = this.state.correctTotal + 1;
       const questionCount = this.state.questionCount + 1;
 
+      if (questionCount === this.state.questionsRepo.length) {
+        this.setState({ wonGame: true });
+      }
+
       this.setState({
         pointTotal: pointTotal,
         correctTotal: correctTotal,
@@ -111,6 +116,7 @@ export default class App extends React.Component {
             getGuess={this.getGuess}
             setSkips={this.setSkips}
             gameOver={this.state.gameOver}
+            wonGame={this.state.wonGame}
             setNewGame={this.setNewGame}
           />
         </div>
