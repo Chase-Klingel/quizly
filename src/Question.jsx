@@ -4,18 +4,17 @@ export default class Question extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { guess: '' }
+    this.state = { guess: '' };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSkip = this.handleSkip.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSkip = this.handleSkip.bind(this);
     this.generateQuestions = this.generateQuestions.bind(this);
     this.getRandChoice = this.getRandChoice.bind(this);
     this.shuffleOptions = this.shuffleOptions.bind(this);
   }
 
   handleSubmit() {
-    console.log(this.props.questionCount - 1);
     const answer = this.props.questionsRepo[this.props.questionCount - 1].answer;
 
     this.props.getGuess(this.state.guess, answer);
@@ -45,7 +44,6 @@ export default class Question extends React.Component {
   }
 
   shuffleOptions(finalizedOptions) {
-    console.log(finalizedOptions, ' finalized options');
     for (var i = finalizedOptions.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = finalizedOptions[i];
@@ -74,7 +72,6 @@ export default class Question extends React.Component {
       );
     } else {
       const choice = this.getRandChoice(questionOptions, this.props.choicesRepo, null, false, answer);
-      
       questionOptions.push(choice);
 
       return this.generateQuestions(questionOptions);

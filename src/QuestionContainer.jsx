@@ -1,49 +1,53 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Radium from 'radium';
 
 import Skips from './Skips';
 import Strikes from './Strikes';
 import PointTotal from './PointTotal';
 import Question from './Question';
 
-export default class QuestionContainer extends React.Component {
-  render() {
-    if (this.props.gameOver || this.props.wonGame) {
-      return <Redirect to="/game-over" />
-    }
+const QuestionContainerComp = (props) => {
+  const { styles } = QuestionContainerComp;
 
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col s12 m6">
-            <Skips
-              skipsRemaining={this.props.skipsRemaining}
-            />
-          </div>
+  if (props.gameOver || props.wonGame) {
+    return <Redirect to="/game-over" />
+  }
 
-          <div className="col s12 m6">
-            <Strikes
-              strikeTotal={this.props.strikeTotal}
-            />
-
-            <PointTotal
-              pointTotal={this.props.pointTotal}
-              correctTotal={this.props.correctTotal}
-            />
-          </div>
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col s12 m6">
+          <Skips
+            skipsRemaining={props.skipsRemaining}
+          />
         </div>
 
-        <div className="row">
-          <Question
-            choicesRepo={this.props.choicesRepo}
-            questionsRepo={this.props.questionsRepo}
-            questionCount={this.props.questionCount}
-            getGuess={this.props.getGuess}
-            setSkips={this.props.setSkips}
-            gameOver={this.props.gameOver}
-            wonGame={this.props.wonGame} />
+        <div className="col s12 m6">
+          <Strikes
+            strikeTotal={props.strikeTotal}
+          />
+
+          <PointTotal
+            pointTotal={props.pointTotal}
+            correctTotal={props.correctTotal}
+          />
         </div>
       </div>
-    );
-  }
+
+      <div className="row">
+        <Question
+          choicesRepo={props.choicesRepo}
+          questionsRepo={props.questionsRepo}
+          questionCount={props.questionCount}
+          getGuess={props.getGuess}
+          setSkips={props.setSkips}
+          gameOver={props.gameOver}
+          wonGame={props.wonGame} />
+      </div>
+    </div>
+  );
 }
+
+const QuestionContainer = Radium(QuestionContainerComp);
+export default QuestionContainer;

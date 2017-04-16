@@ -10,7 +10,6 @@ export default class App extends React.Component {
       speciesSingular: '',
       speciesPlural: '',
       selectedSpecies: false,
-      previousImg: '',
       skipsRemaining: 3,
       strikeTotal: 0,
       pointTotal: 0,
@@ -39,12 +38,6 @@ export default class App extends React.Component {
       questionsRepo: questionsRepo,
       selectedSpecies: true
     });
-  }
-
-  setGameState() {
-    // set correctAnswer
-    // set previousImg
-    // set questionChoices
   }
 
   setSkips() {
@@ -122,7 +115,6 @@ export default class App extends React.Component {
             setNewGame={this.setNewGame}
           />
         </div>
-
       </Router>
     );
   }

@@ -38,35 +38,31 @@ class SelectSpecies extends React.Component {
     const speciesPlural = event.target.innerHTML.toLowerCase();
 
     axios.get(`http://api.inaturalist.org/v1/taxa/autocomplete?q=${speciesSingular}&per_page=30`)
-        .then((res) => {
-          const choicesRepo = [];
-          const questionsRepo = [];
+      .then((res) => {
+        const choicesRepo = [];
+        const questionsRepo = [];
 
-          // started at 2 b/c first two are extremely general names
-          for (let i = 2; i < res.data.results.length; i++) {
-            if (res.data.results[i].preferred_common_name !== undefined) {
-              choicesRepo.push(res.data.results[i].preferred_common_name);
-              questionsRepo.push({
-                img: res.data.results[i].default_photo.medium_url,
-                answer: res.data.results[i].preferred_common_name
-              });
-            }
+        // started at 2 b/c first two are extremely general names
+        for (let i = 2; i < res.data.results.length; i++) {
+          if (res.data.results[i].preferred_common_name !== undefined) {
+            choicesRepo.push(res.data.results[i].preferred_common_name);
+            questionsRepo.push({
+              img: res.data.results[i].default_photo.medium_url,
+              answer: res.data.results[i].preferred_common_name
+            });
           }
+        }
 
-
-          this.props.setInitialGameState(
-            speciesSingular,
-            speciesPlural,
-            choicesRepo,
-            questionsRepo
-          );
-        })
-        // .then(() => {
-        //   this.setState({ redirect: '/rules' });
-        // })
-        .catch((err) => {
-          return err;
-        })
+        this.props.setInitialGameState(
+          speciesSingular,
+          speciesPlural,
+          choicesRepo,
+          questionsRepo
+        );
+      })
+      .catch((err) => {
+        return err;
+      })
   }
 
   render() {

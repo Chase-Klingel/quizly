@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import Radium from 'radium';
 
 import SelectSpecies from './SelectSpecies';
 import GameRules from './GameRules';
@@ -7,15 +8,15 @@ import QuestionContainer from './QuestionContainer';
 import GameOver from './GameOver';
 // import NotFound from './NotFound';
 
-export default class Main extends React.Component {
+class Main extends React.Component {
   render() {
     return (
       <div className="row">
-        <Route path="/" exactly render={
-        () => <SelectSpecies
-                selectedSpecies={this.props.selectedSpecies}
-                setInitialGameState={this.props.setInitialGameState}
-              />
+        <Route path="/" exactly render={() =>
+          <SelectSpecies
+            selectedSpecies={this.props.selectedSpecies}
+            setInitialGameState={this.props.setInitialGameState}
+          />
         }/>
 
         <Route path="/rules" exactly render={() =>
@@ -59,3 +60,5 @@ export default class Main extends React.Component {
     );
   }
 }
+
+export default Radium( Main );

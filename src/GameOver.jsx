@@ -1,7 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Radium from 'radium';
 
-export default class GameOver extends React.Component {
+class GameOver extends React.Component {
   constructor(props) {
     super(props);
 
@@ -44,3 +45,5 @@ export default class GameOver extends React.Component {
     );
   }
 }
+
+export default Radium( GameOver );
