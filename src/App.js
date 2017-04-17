@@ -2,7 +2,21 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Main from './Main';
 
-export default class App extends React.Component {
+const styles = {
+  header: {
+    height: 50,
+    borderBottom: '1px solid rgba(0, 0, 0, .08)'
+  },
+
+  logo: {
+    fontSize: 24,
+    marginTop: 25,
+    marginLeft: 50,
+    color: '#00ff00'
+  }
+}
+
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -96,6 +110,9 @@ export default class App extends React.Component {
     return (
       <Router>
         <div>
+          <header style={ styles.header }>
+            <h1 style={ styles.logo }>Quizly</h1>
+          </header>
           <Main
             selectedSpecies={this.state.selectedSpecies}
             skipsRemaining={this.state.skipsRemaining}
@@ -119,3 +136,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default App;

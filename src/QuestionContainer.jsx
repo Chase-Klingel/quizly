@@ -8,8 +8,6 @@ import PointTotal from './PointTotal';
 import Question from './Question';
 
 const QuestionContainerComp = (props) => {
-  const { styles } = QuestionContainerComp;
-
   if (props.gameOver || props.wonGame) {
     return <Redirect to="/game-over" />
   }
@@ -17,17 +15,17 @@ const QuestionContainerComp = (props) => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col s12 m6">
+        <div className="col s12 m3">
           <Skips
             skipsRemaining={props.skipsRemaining}
           />
-        </div>
 
-        <div className="col s12 m6">
           <Strikes
             strikeTotal={props.strikeTotal}
           />
+        </div>
 
+        <div className="col s12 m6 offset-m3">
           <PointTotal
             pointTotal={props.pointTotal}
             correctTotal={props.correctTotal}

@@ -1,14 +1,61 @@
 import React from 'react';
+import Radium from 'radium';
 
-export default class Question extends React.Component {
+const styles = {
+  img: {
+    maxWidth: '100%'
+  },
+
+  inactiveOption: {
+    background: '#38acea',
+    color: 'white',
+    padding: '20px 0 20px 20px',
+    borderBottom: '1px solid rgba(0, 0, 0, .08)'
+  },
+
+  selectedOption: {
+    background: '#7638ea',
+    color: 'white',
+    padding: '20px 0 20px 20px',
+    borderBottom: '1px solid rgba(0, 0, 0, .08)',
+  },
+
+  btn: {
+    width: '100%',
+    border: 'none',
+    height: 50
+  },
+
+  submit: {
+    background: '#38ea76',
+    color: 'white'
+  },
+
+  skip: {
+    border: '1px solid black',
+    background: 'none'
+  }
+}
+
+class Question extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { guess: '' };
+    this.state = {
+      guess: ''
+      // guessList: {
+      //   1: false,
+      //   2: false,
+      //   3: false,
+      //   4: false
+      // }
+    };
+
+    // this.baseState = this.state;
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleSkip = this.handleSkip.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.generateQuestions = this.generateQuestions.bind(this);
     this.getRandChoice = this.getRandChoice.bind(this);
     this.shuffleOptions = this.shuffleOptions.bind(this);
@@ -21,6 +68,21 @@ export default class Question extends React.Component {
   }
 
   handleChange(e) {
+    // const nextGuessList = {};
+
+    // for (let guess in this.state.guessList) {
+    //   console.log(typeof guess, ' this is guess');
+    //   console.log(key, ' this is key');
+    //   if (guess === key.toString()) {
+    //     console.log('we here');
+    //     nextGuessList[guess] = true;
+    //   } else {
+    //     nextGuessList[guess] = false;
+    //   }
+    // }
+
+    // this.setState({ guess: e.target.innerHTML, guessList: nextGuessList, clickedOption: true });
+    console.log(e.target.innerHTML);
     this.setState({ guess: e.target.innerHTML });
   }
 
@@ -44,9 +106,9 @@ export default class Question extends React.Component {
   }
 
   shuffleOptions(finalizedOptions) {
-    for (var i = finalizedOptions.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = finalizedOptions[i];
+    for (let i = finalizedOptions.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        let temp = finalizedOptions[i];
         finalizedOptions[i] = finalizedOptions[j];
         finalizedOptions[j] = temp;
     }
@@ -64,14 +126,22 @@ export default class Question extends React.Component {
 
       return (
         <ul>
-          <li onClick={this.handleChange}>{finalizedOptions[0]}</li>
-          <li onClick={this.handleChange}>{finalizedOptions[1]}</li>
-          <li onClick={this.handleChange}>{finalizedOptions[2]}</li>
-          <li onClick={this.handleChange}>{finalizedOptions[3]}</li>
+          <li onClick={this.handleChange} style={styles.inactiveOption}>{finalizedOptions[0]}</li>
+          <li onClick={this.handleChange} style={styles.inactiveOption}>{finalizedOptions[1]}</li>
+          <li onClick={this.handleChange} style={styles.inactiveOption}>{finalizedOptions[2]}</li>
+          <li onClick={this.handleChange} style={styles.inactiveOption}>{finalizedOptions[3]}</li>
         </ul>
+
+        // <ul>
+        //   <li onClick={this.handleChange.bind(this, 1)} style={this.state.guessList["1"] === true ? styles.selectedOption : styles.inactiveOption} key="1">{finalizedOptions[0]}</li>
+        //   <li onClick={this.handleChange.bind(this, 2)} style={this.state.guessList["2"] === true ? styles.selectedOption : styles.inactiveOption} key="2">{finalizedOptions[1]}</li>
+        //   <li onClick={this.handleChange.bind(this, 3)} style={this.state.guessList["3"] === true ? styles.selectedOption : styles.inactiveOption} key="3">{finalizedOptions[2]}</li>
+        //   <li onClick={this.handleChange.bind(this, 4)} style={this.state.guessList["4"] === true ? styles.selectedOption : styles.inactiveOption} key="4">{finalizedOptions[3]}</li>
+        // </ul>
       );
     } else {
       const choice = this.getRandChoice(questionOptions, this.props.choicesRepo, null, false, answer);
+
       questionOptions.push(choice);
 
       return this.generateQuestions(questionOptions);
@@ -93,15 +163,26 @@ export default class Question extends React.Component {
   render() {
     return (
       <div>
-        <img src={this.props.questionsRepo[this.props.questionCount - 1].img} alt="species" />
-
-        { this.generateQuestions([]) }
-
         <div className="row">
-          <button onClick={ this.handleSubmit }>submit</button>
-          <button onClick={ this.handleSkip }>skip</button>
+          <div className="col s12 m6">
+            <img style={styles.img} src={this.props.questionsRepo[this.props.questionCount - 1].img} alt="species" />
+          </div>
+          <div className="col s12 m5 offset-m1" style={styles.question}>
+            { this.generateQuestions([]) }
+
+            <div className="row" style={styles.btnContainer}>
+              <div className="col s12 m6">
+                <button onClick={this.handleSubmit} style={[styles.btn, styles.submit]}>submit</button>
+              </div>
+              <div className="col s12 m6">
+                <button onClick={this.handleSkip} style={[styles.btn, styles.skip]}>skip</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 }
+
+export default Radium(Question);
